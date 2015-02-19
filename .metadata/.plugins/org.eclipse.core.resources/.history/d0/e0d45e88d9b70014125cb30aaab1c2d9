@@ -1,0 +1,41 @@
+package game;
+
+import game.Block.BlockType;
+
+public class GameBoard {
+	
+	public Block[][] gameBoard;
+	
+	public GameBoard(int size) {
+		this.gameBoard = new Block[size][size];
+		initializeStartPositions();
+	}
+	
+	private void initializeStartPositions() 
+	{
+		Block startPos1 = this.gameBoard[0][0];
+		Block startPos2 = this.gameBoard[this.gameBoard.length - 1][0];
+		Block startPos3 = this.gameBoard[0][this.gameBoard.length - 1];
+		Block startPos4 = this.gameBoard[this.gameBoard.length - 1][this.gameBoard.length - 1];
+		
+		startPos1.blockType = BlockType.PLAYER;
+		startPos2.blockType = BlockType.PLAYER;
+		startPos3.blockType = BlockType.PLAYER;
+		startPos4.blockType = BlockType.PLAYER;
+		
+		Block goalPosition = this.gameBoard[3][3];
+		goalPosition.blockType = BlockType.GOAL;
+	}
+
+	private int[][] walls(int game) 
+	{
+		if (game == 0) 
+		{
+			return new int[][]{{0,3},{1,1},{1,4},{2,1},{2,4},{3,1},{3,2},{3,3},{4,2},{5,2},{5,3},{5,4}};
+		} else 
+		{
+			return new int[][]{{0,3},{1,1},{1,4},{2,1},{2,4},{3,1},{3,2},{3,3},{4,2},{5,2},{5,3},{5,4},{6,5}};
+		}
+	}
+
+}

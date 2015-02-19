@@ -1,0 +1,69 @@
+package game;
+
+public class Block {
+	GameBoard board;
+	BlockType blockType;
+	int x;
+	int y;
+	
+	public enum BlockType {
+	    WALL, GOAL, PLAYER, VOID, EMPTY
+	}
+	
+	public Block(GameBoard board, BlockType blockType, int x, int y) {
+		this.blockType = blockType;
+		this.x = x;
+		this.y = y;
+	}
+	
+	public int verticalDistance(Block goal) {
+		return Math.abs(goal.y - this.y);
+	}
+	
+	public int horizontalDistance(Block goal) {
+		return Math.abs(goal.x - this.x);
+	}
+	
+	public int numObstaclesInPath(GameBoard board, Block goal) {
+		int obstacles = 0;
+		
+		int startY = goal.y > this.y ? this.y : goal.y;
+		int endY = goal.y > this.y ? goal.y : this.y;
+		for (int y = startY; y < endY; y++) {
+			if (board.getBlock(y, this.x).blockType == BlockType.WALL) {
+				obstacles++;
+			}
+		}
+		
+		int startX = goal.x > this.x ? this.x : goal.x;
+		int endX = goal.x > this.x ? goal.x : this.x;
+		for (int x = startX; x < endX; x++) {
+			if (board.getBlock(x, goal.y).blockType == BlockType.WALL) {
+				obstacles++;
+			}
+		}
+		
+		return obstacles;
+	}
+	
+	public void printBlock() {
+		switch (this.blockType) {
+		case WALL:
+			System.out.print('☒');
+			break;
+		case GOAL:
+			System.out.print('✮');
+			break;
+		case PLAYER:
+			System.out.print('☑');
+			break;
+		case EMPTY:
+			System.out.print('☐');
+			break;
+		case VOID:
+			System.out.print('X');
+			break;
+		}
+	}
+
+}

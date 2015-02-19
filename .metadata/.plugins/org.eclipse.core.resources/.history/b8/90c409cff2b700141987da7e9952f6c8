@@ -1,0 +1,14 @@
+package game;
+
+public class AStarStats
+{
+	public Block player;
+    public int numVisited;
+    public int lengthOfPath;
+    
+    public AStarStats(Block player, int numVisited, int lengthOfPath) {
+    	this.player = player;
+    	this.numVisited = numVisited;
+    	this.lengthOfPath = lengthOfPath;
+    }
+} 

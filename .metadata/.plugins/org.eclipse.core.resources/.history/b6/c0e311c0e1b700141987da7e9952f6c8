@@ -1,0 +1,46 @@
+package game;
+
+public class Block {
+	BlockType blockType;
+	int x;
+	int y;
+	
+	public enum BlockType {
+	    WALL, GOAL, PLAYER, VOID, EMPTY
+	}
+	
+	public Block(BlockType blockType, int x, int y) {
+		this.blockType = blockType;
+		this.x = x;
+		this.y = y;
+	}
+	
+	public int verticalDistance(Block goal) {
+		return Math.abs(goal.y - this.y);
+	}
+	
+	public int horizontalDistance(Block goal) {
+		return Math.abs(goal.x - this.x);
+	}
+	
+	public void printBlock() {
+		switch (this.blockType) {
+		case WALL:
+			System.out.print('☒');
+			break;
+		case GOAL:
+			System.out.print('✮');
+			break;
+		case PLAYER:
+			System.out.print('☑');
+			break;
+		case EMPTY:
+			System.out.print('☐');
+			break;
+		case VOID:
+			System.out.print('X');
+			break;
+		}
+	}
+
+}

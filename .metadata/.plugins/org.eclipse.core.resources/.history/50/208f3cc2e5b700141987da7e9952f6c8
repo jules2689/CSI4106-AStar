@@ -1,0 +1,28 @@
+import game.Block;
+import game.GameBoard;
+import game.Block.BlockType;
+
+public class Runner {
+
+	public static void main(String[] args) {
+		GameBoard gameBoard = new GameBoard(7);
+		gameBoard.printGameBoard();
+	
+		metadata(gameBoard, 0, 0);
+		metadata(gameBoard, 0, 6);
+		metadata(gameBoard, 6, 0);
+		metadata(gameBoard, 6, 6);
+	}
+	
+	public static void metadata(GameBoard gameBoard, int x, int y) {
+		Block block = gameBoard.getBlock(x, y);
+		System.out.println(block.getBlockType() + "-> X: " + x + " Y: " + y);
+		if (block.getBlockType() == BlockType.PLAYER) {
+			System.out.println("Vertical: " + block.verticalDistanceToGoal());
+			System.out.println("Horizontal: " + block.horizontalDistanceToGoal());
+			System.out.println("Obstacles: " + block.numObstaclesInPath());
+			System.out.println("");
+		}
+	}
+
+}

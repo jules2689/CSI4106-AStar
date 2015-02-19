@@ -1,0 +1,36 @@
+import java.util.ArrayList;
+
+import game.AStarStats;
+import game.Block;
+import game.GameBoard;
+import game.Block.BlockType;
+
+public class Runner {
+
+	public static void main(String[] args) {
+		GameBoard gameBoard = new GameBoard(7);
+		gameBoard.printGameBoard(false);
+	
+		ArrayList<AStarStats> stats = new ArrayList<AStarStats>(4);
+		stats.add(gameBoard.aStar(gameBoard.getBlock(0, 0)));
+		stats.add(gameBoard.aStar(gameBoard.getBlock(0, 6)));
+		stats.add(gameBoard.aStar(gameBoard.getBlock(6, 0)));
+		stats.add(gameBoard.aStar(gameBoard.getBlock(6, 6)));
+	}
+	
+	public static void metadata(GameBoard gameBoard, int x, int y) {
+		Block block = gameBoard.getBlock(x, y);
+		if (block.getBlockType() != BlockType.EMPTY) {
+			System.out.println(block.getBlockType() + "-> X: " + x + " Y: " + y);
+			if (block.getBlockType() == BlockType.PLAYER) {
+				System.out.println("Heuristic Cost: " + block.heuristicCost());
+			}
+			System.out.println("");
+		}
+	}
+	
+	public static void declareWinner(ArrayList<AStarStats> stats) {
+		
+	}
+
+}

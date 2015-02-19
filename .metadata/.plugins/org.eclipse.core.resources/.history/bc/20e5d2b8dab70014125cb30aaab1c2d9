@@ -1,0 +1,30 @@
+package game;
+
+public class Block {
+	BlockType blockType;
+	
+	public enum BlockType {
+	    WALL, GOAL, PLAYER, VOID
+	}
+	
+	public Block(BlockType blockType) {
+		this.blockType = blockType;
+	}
+	
+	public void printBlock() {
+		switch (this.blockType) {
+		case WALL:
+			System.out.print('█');
+			break;
+		case GOAL:
+			System.out.print('☆');
+			break;
+		case PLAYER:
+			System.out.print('☺');
+			break;
+		case VOID:
+			break;
+		}
+	}
+
+}

@@ -1,0 +1,31 @@
+import game.Block;
+import game.GameBoard;
+import game.Block.BlockType;
+
+public class Runner {
+
+	public static void main(String[] args) 
+	{
+		GameBoard gameBoard = new GameBoard(7);
+		gameBoard.printGameBoard();
+	
+		for (int i = 0; i < gameBoard.gameBoard.length; i++) {
+			for (int j = 0; j < gameBoard.gameBoard[i].length; j++){
+				metadata(gameBoard, i, j);
+			}
+		}
+	}
+	
+	public static void metadata(GameBoard gameBoard, int x, int y) 
+	{
+		Block block = gameBoard.getBlock(x, y);
+		if (block.getBlockType() != BlockType.EMPTY) {
+			System.out.println(block.getBlockType() + "-> X: " + x + " Y: " + y);
+			if (block.getBlockType() == BlockType.PLAYER) {
+				System.out.println("Heuristic Cost: " + block.heuristicCost());
+			}
+			System.out.println("");
+		}
+	}
+
+}

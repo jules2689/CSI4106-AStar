@@ -1,0 +1,14 @@
+package game;
+
+public class Block {
+	BlockType blockType;
+	
+	public enum BlockType {
+	    WALL, GOAL, PLAYER 
+	}
+	
+	public Block(BlockType blockType) {
+		this.blockType = blockType;
+	}
+
+}

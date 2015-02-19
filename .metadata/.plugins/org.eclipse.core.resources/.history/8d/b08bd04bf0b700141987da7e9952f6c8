@@ -1,0 +1,176 @@
+package game;
+
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Queue;
+import java.util.Stack;
+
+import game.Block.BlockType;
+
+public class GameBoard {
+	
+	public Block[][] gameBoard;
+	public Block goal;
+	
+	public GameBoard(int size) {
+		this.gameBoard = new Block[size][size];
+		
+		for (int x = 0; x < this.gameBoard.length; x++) {
+			for (int y = 0; y < this.gameBoard[x].length; y++) {
+				BlockType type = getBlockType(x,y);
+				this.gameBoard[x][y] = new Block(this, type, x, y);
+				if (type == BlockType.GOAL) {
+					goal = this.gameBoard[x][y];
+				}
+				
+			}
+		}
+	}
+	
+	public Block moveBlock(Block block, int byX, int byY) {
+		if (canMoveBlock(block, byX, byY)) {
+			int newX = block.x + byX;
+			int newY = block.y + byY;
+			Block newBlock = getBlock(newX, newY);
+			newBlock.blockType = BlockType.PLAYER; // Make the new block the player
+			block.blockType = BlockType.EMPTY; // Make the old block empty
+			return newBlock; // We could move return new Player Block
+		} else {
+			return block; // We couldn't move return current block
+		}
+	}
+	
+	private boolean canMoveBlock(Block block, int byX, int byY) {
+		boolean canMove = true;
+		
+		// Cannot move more than 1 block
+		if (byX < -1 || byX > 1 || byY < -1 || byY > 1) {
+			canMove = false;
+		}
+		
+		// Don't allow off the board
+		int newX = block.x + byX;
+		int newY = block.y + byY;
+		if (newX < 0 || newX > this.gameBoard.length || newY < 0 || newY > this.gameBoard.length) {
+			canMove = false;
+		}
+		
+		// Can only move to a new block if it is empty or goal
+		Block newBlock = getBlock(newX, newY);
+		if ((newBlock.blockType == BlockType.EMPTY || newBlock.blockType == BlockType.GOAL) == false) {
+			canMove = false;
+		}
+		
+		return canMove;
+	}
+	
+	public Block getBlock(int x, int y) {
+		return this.gameBoard[x][y];
+	}
+	
+	public void printGameBoard(boolean traversal) {
+		for (int x = 0; x < this.gameBoard.length; x++) {
+			for (int y = 0; y < this.gameBoard[x].length; y++) {
+				Block block = getBlock(x,y);
+				block.printBlock(traversal);
+			}
+			System.out.print('\n');
+		}
+		System.out.println("\n\n");
+	}
+	
+	public void resetGameBoard() {
+		for (int x = 0; x < this.gameBoard.length; x++) {
+			for (int y = 0; y < this.gameBoard[x].length; y++) {
+				Block block =  getBlock(x,y);
+				block.visited = false;
+				block.parentBlock = null;
+			}
+		}
+	}
+	
+	public void aStar(Block startPlayer) {
+		resetGameBoard();
+		
+		Queue<Block> frontier = new ArrayDeque<Block>();
+		frontier.add(startPlayer);
+		startPlayer.visited = true;
+		Block goalBlock = null;
+		
+		WhileLoop: while (!frontier.isEmpty()) {
+			printGameBoard(true);
+			Block currentBlock = frontier.poll();
+			for (Block neighbour : currentBlock.getNeighbours()) {
+				if (!neighbour.visited) {
+					neighbour.parentBlock = currentBlock;
+					neighbour.visited = true;
+					if (neighbour.blockType == BlockType.GOAL) {
+						System.out.println("Reached Goal!");
+						goalBlock = neighbour;
+						break WhileLoop;
+					}
+					frontier.add(neighbour);
+				}
+			}
+		}
+		
+		Stack<Block> blockStack = new Stack<Block>();
+		blockStack.add(goalBlock);
+		while(goalBlock.parentBlock != null) {
+			goalBlock = goalBlock.parentBlock;
+			blockStack.add(goalBlock);
+		}
+		for (Block block : blockStack) {
+			System.out.println("X: " + block.y + " Y: " + block.x);
+		}
+		
+	}
+	
+	private BlockType getBlockType(int i, int j) {
+		ArrayList<int[]> walls = getWalls(false);
+		boolean isPlayer = (i == this.gameBoard.length -1 || i == 0) && 
+						   (j == this.gameBoard.length - 1 || j == 0);
+		if (isPlayer) {
+			return BlockType.PLAYER;
+		} else if (listContainsPosition(walls, new int[]{i,j})) {
+			return BlockType.WALL;
+		} else if (i == 3 && j == 3) {
+			return BlockType.GOAL;
+		} else {
+			return BlockType.EMPTY;
+		}
+	}
+	
+	// Helper Methods
+	private ArrayList<int[]> getWalls(boolean specialGame) {
+		ArrayList<int[]> walls = new ArrayList<int[]>();
+		walls.add(new int[]{0,3});
+		walls.add(new int[]{1,1});
+		walls.add(new int[]{1,4});
+		walls.add(new int[]{2,1});
+		walls.add(new int[]{2,4});
+		walls.add(new int[]{3,1});
+		walls.add(new int[]{3,2});
+		walls.add(new int[]{3,4});
+		walls.add(new int[]{4,2});
+		walls.add(new int[]{5,2});
+		walls.add(new int[]{5,3});
+		walls.add(new int[]{5,4});
+		if (specialGame) {
+			walls.add(new int[]{6,5});
+		}
+		return walls;
+	}
+	
+	private boolean listContainsPosition(ArrayList<int[]> list, int [] array) {
+		boolean isContained = false;
+		Iterator<int[]> iterator = list.iterator();
+		while(iterator.hasNext() && !isContained) {
+			int []compare = iterator.next();
+			isContained = array[0] == compare[0] && array[1] == compare[1];
+		}
+		return isContained;
+	}
+
+}
