@@ -1,4 +1,5 @@
 # CSI4106-AStar
+
 Purpose:
 ---
 The purpose of this assignment is to allow you to experiment with an informed search
@@ -43,3 +44,109 @@ of positions visited on the path from the starting position to home.
 Your program should take as input the starting positions of each smiley face and should
 output the list of positions traveled from that starting position to the goal, for each smiley
 face, along with the length of that path. 
+
+Example Output
+---
+
+☑ = Player
+☐ = Empty
+☒ = Wall
+✮ = Goal
+  = Void
+
+```
+☑☐☐☒☐☐☐☐☑
+☐☒☐☐☒☐☐☐☐
+☐☒☐☐☒☐☐  
+☐☒☒✮☒☐☐  
+☐☐☒☐☐☐☐  
+☐☐☒☒☒☐☐  
+☐☐☐☐☐☒☐  
+☐☐☐☐☐☐☐☐☐
+☑☐☐☐☐☐☐☐☑
+
+
+
+Starting search for player at X: 0 Y: 0
+Reached Goal!
+PLAYER-> X: 0 Y: 0
+Move to-> X: 1 Y: 0
+Move to-> X: 2 Y: 0
+Move to-> X: 2 Y: 1
+Move to-> X: 3 Y: 1
+Move to-> X: 3 Y: 2
+GOAL-> X: 3 Y: 3
+
+
+
+Starting search for player at X: 0 Y: 8
+Reached Goal!
+PLAYER-> X: 0 Y: 8
+Move to-> X: 1 Y: 8
+Move to-> X: 2 Y: 8
+Move to-> X: 3 Y: 8
+Move to-> X: 4 Y: 8
+Move to-> X: 5 Y: 8
+Move to-> X: 6 Y: 8
+Move to-> X: 6 Y: 7
+Move to-> X: 6 Y: 6
+Move to-> X: 6 Y: 5
+Move to-> X: 5 Y: 5
+Move to-> X: 5 Y: 4
+Move to-> X: 4 Y: 4
+Move to-> X: 3 Y: 4
+GOAL-> X: 3 Y: 3
+
+
+
+Starting search for player at X: 8 Y: 0
+Reached Goal!
+PLAYER-> X: 8 Y: 0
+Move to-> X: 7 Y: 0
+Move to-> X: 6 Y: 0
+Move to-> X: 5 Y: 0
+Move to-> X: 5 Y: 1
+Move to-> X: 5 Y: 2
+Move to-> X: 5 Y: 3
+Move to-> X: 5 Y: 4
+Move to-> X: 4 Y: 4
+Move to-> X: 3 Y: 4
+GOAL-> X: 3 Y: 3
+
+
+
+Starting search for player at X: 8 Y: 8
+Reached Goal!
+PLAYER-> X: 8 Y: 8
+Move to-> X: 7 Y: 8
+Move to-> X: 6 Y: 8
+Move to-> X: 6 Y: 7
+Move to-> X: 6 Y: 6
+Move to-> X: 6 Y: 5
+Move to-> X: 5 Y: 5
+Move to-> X: 5 Y: 4
+Move to-> X: 4 Y: 4
+Move to-> X: 3 Y: 4
+GOAL-> X: 3 Y: 3
+
+
+
+The Winner was player at X: 0 Y: 0
+Visited 13 blocks
+Length of Path was 7
+
+
+The player in position 2 at X: 8 Y: 0
+Visited 21 blocks
+Length of Path was 11
+
+
+The player in position 3 at X: 8 Y: 8
+Visited 36 blocks
+Length of Path was 11
+
+
+The player in position 4 at X: 0 Y: 8
+Visited 49 blocks
+Length of Path was 15
+```
