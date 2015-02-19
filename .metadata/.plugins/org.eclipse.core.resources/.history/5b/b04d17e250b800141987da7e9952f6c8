@@ -30,7 +30,7 @@ public class Runner {
 			} else {
 				System.out.println("The player in position " + (pos + 1) + " at X: " + stat.player.getX() + " Y: " + stat.player.getY());
 			}
-			System.out.println("Heuristic Cost was " + stat.heuristicCost);
+			System.out.println("Heuristic Cost was " + stat.numVisited + " blocks");
 			System.out.println("Visited " + stat.numVisited + " blocks");
 			System.out.println("Length of Path was " + stat.lengthOfPath + "\n\n");
 			

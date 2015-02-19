@@ -7,11 +7,10 @@ public class AStarStats implements Comparable<AStarStats>
     public int lengthOfPath;
     public int heuristicCost;
     
-    public AStarStats(Block player, int numVisited, int lengthOfPath, int heuristicCost) {
+    public AStarStats(Block player, int numVisited, int lengthOfPath) {
     	this.player = player;
     	this.numVisited = numVisited;
     	this.lengthOfPath = lengthOfPath;
-    	this.heuristicCost = heuristicCost;
     }
 
 	@Override

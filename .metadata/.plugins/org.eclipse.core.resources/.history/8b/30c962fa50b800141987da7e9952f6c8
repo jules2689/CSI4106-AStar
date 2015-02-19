@@ -101,7 +101,7 @@ public class GameBoard {
 		}
 
 		System.out.println("\n\n");
-		return new AStarStats(startPlayer, numVisited, lengthOfPath, startPlayer.heuristicCost());
+		return new AStarStats(startPlayer, numVisited, lengthOfPath);
 		
 	}
 	
