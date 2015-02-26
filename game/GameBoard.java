@@ -14,15 +14,17 @@ public class GameBoard {
 	public Block[][] gameBoard;
 	public Block goal;
 	private boolean outputPath;
+	private ArrayList<int[]> playerPos;
 	
-	public GameBoard(int size, boolean outputPath) {
+	public GameBoard(int size, boolean outputPath, ArrayList<int[]> playerPos) {
 		this.gameBoard = new Block[size][size];
 		this.outputPath = outputPath;
+		this.playerPos = playerPos;
 		
 		for (int x = 0; x < this.gameBoard.length; x++) {
 			for (int y = 0; y < this.gameBoard[x].length; y++) {
-				BlockType type = getBlockType(x,y);
-				this.gameBoard[y][x] = new Block(this, type, y, x);
+				BlockType type = GameBoard.getBlockType(x, y, this.playerPos, size);
+				this.gameBoard[y][x] = new Block(this, type, x, y);
 				if (type == BlockType.GOAL) {
 					goal = this.gameBoard[y][x];
 				}
@@ -32,7 +34,7 @@ public class GameBoard {
 	}
 	
 	public Block getBlock(int x, int y) {
-		return this.gameBoard[x][y];
+		return this.gameBoard[y][x];  // Reverse x,y because Java is column first traversal
 	}
 	
 	// Gameboard Helpers
@@ -40,7 +42,7 @@ public class GameBoard {
 	public void printGameBoard(boolean traversal) {		
 		for (int x = 0; x < this.gameBoard.length; x++) {
 			for (int y = 0; y < this.gameBoard[x].length; y++) {
-				Block block = getBlock(y,x); // Reverse x,y because Java is column first traversal
+				Block block = getBlock(x,y);
 				block.printBlock(traversal);
 			}
 			System.out.print('\n');
@@ -154,13 +156,12 @@ public class GameBoard {
 	
 	// Gameboard Building Helpers
 	
-	private BlockType getBlockType(int x, int y) {
-		ArrayList<int[]> walls = getWalls();
-		boolean isPlayer = (x == this.gameBoard.length -1 || x == 0) && 
-						   (y == this.gameBoard.length - 1 || y == 0);
-		if (isPlayer) {
+	public static BlockType getBlockType(int x, int y, ArrayList<int[]>playerPos, int size) {
+		ArrayList<int[]> walls = GameBoard.getWalls(size);
+
+		if (GameBoard.listContainsPosition(playerPos, new int[]{x,y})) {
 			return BlockType.PLAYER;
-		} else if (listContainsPosition(walls, new int[]{x,y})) {
+		} else if (GameBoard.listContainsPosition(walls, new int[]{x,y})) {
 			return BlockType.WALL;
 		} else if (x == 3 && y == 3) {
 			return BlockType.GOAL;
@@ -171,7 +172,7 @@ public class GameBoard {
 		}
 	}
 	
-	private ArrayList<int[]> getWalls() {
+	public static ArrayList<int[]> getWalls(int size) {
 		ArrayList<int[]> walls = new ArrayList<int[]>();
 		walls.add(new int[]{0,3});
 		walls.add(new int[]{1,1});
@@ -185,13 +186,13 @@ public class GameBoard {
 		walls.add(new int[]{5,2});
 		walls.add(new int[]{5,3});
 		walls.add(new int[]{5,4});
-		if (this.gameBoard.length == 9) {
+		if (size == 9) {
 			walls.add(new int[]{6,5});
 		}
 		return walls;
 	}
 	
-	private boolean listContainsPosition(ArrayList<int[]> list, int [] array) {
+	public static boolean listContainsPosition(ArrayList<int[]> list, int [] array) {
 		boolean isContained = false;
 		Iterator<int[]> iterator = list.iterator();
 		while(iterator.hasNext() && !isContained) {

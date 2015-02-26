@@ -4,10 +4,12 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Iterator;
 
 import game.AStarStats;
 import game.Block;
 import game.GameBoard;
+import game.Block.BlockType;
 
 public class Runner {
 
@@ -18,7 +20,9 @@ public class Runner {
 		System.out.println("It is recommended to zoom into see the board output more easily.");
 		
 		int gameBoardSizeChoice = getGameBoardSize();
-		GameBoard gameBoard = new GameBoard(gameBoardSizeChoice, getShouldOutputPath());
+		ArrayList<int[]> playerPos = getPlayerPositions(gameBoardSizeChoice - 1);
+
+		GameBoard gameBoard = new GameBoard(gameBoardSizeChoice, getShouldOutputPath(), playerPos);
 		
 		Block.printBlockSymbolMeanings();
 		System.out.println("\n\n");
@@ -28,17 +32,17 @@ public class Runner {
 		
 		System.out.println("Here are the races for each player:\n");
 		int size = gameBoard.gameBoard.length - 1;
-		ArrayList<AStarStats> stats = new ArrayList<AStarStats>(4);
-		stats.add(gameBoard.aStar(gameBoard.getBlock(0, 0)));
-		stats.add(gameBoard.aStar(gameBoard.getBlock(0, size)));
-		stats.add(gameBoard.aStar(gameBoard.getBlock(size, 0)));
-		stats.add(gameBoard.aStar(gameBoard.getBlock(size, size)));
-		
+		ArrayList<AStarStats> stats = new ArrayList<AStarStats>(playerPos.size());
+		for (int []pos : playerPos) {
+			stats.add(gameBoard.aStar(gameBoard.getBlock(pos[0], pos[1])));
+		}
 		System.out.println("Here are the race results:\n");
-		declareWinner(stats);
+		declareWinnerAndStats(stats);
 	}
+
+	// Declare Winner and Stats
 	
-	public static void declareWinner(List<AStarStats> stats) {
+	public static void declareWinnerAndStats(List<AStarStats> stats) {
 		Collections.sort(stats);
 		for (AStarStats stat : stats) {
 			int pos = stats.indexOf(stat);
@@ -52,6 +56,8 @@ public class Runner {
 			System.out.println("\n");
 		}
 	}
+
+	// Ask for the size of the game board
 	
 	private static int getGameBoardSize() {
 		String choice = "N/A";
@@ -69,6 +75,34 @@ public class Runner {
 			return 9;
 		}
 	}
+
+	// Get Player Positions
+
+	private static ArrayList<int[]> getPlayerPositions(int size) {
+		String message = "How many players do you want? ";
+		int numPlayers = getNumFromConsole(message, 10);
+		ArrayList<int[]> pos = new ArrayList<int[]>(numPlayers);
+
+		for (int i = 0; i < numPlayers; i++) {
+			message = "What is the X position for player " + i + "? Max: " + size + " :: ";
+			int x = getNumFromConsole(message, size);
+
+			message = "What is the Y position for player " + i + "? Max: " + size + " :: ";
+			int y = getNumFromConsole(message, size);
+
+			int []position = new int[]{x,y};
+			if (GameBoard.getBlockType(x,y,pos,size) == BlockType.EMPTY) {
+				pos.add(position);
+			} else {
+				System.out.println("You can only place your player on an empty square.");
+				i--; // Redo this one
+			}
+		}
+
+		return pos;
+	}
+
+	// Ask if we want to show the traversal path
 	
 	private static boolean getShouldOutputPath() {
 		String choice = "N/A";
@@ -86,12 +120,52 @@ public class Runner {
 			return false;
 		}
 	}
+
+	// Helpers
 	
 	private static String readLine(String format, Object... args) throws IOException {
 	    if (System.console() != null) { return System.console().readLine(format, args); }
 	    System.out.print(String.format(format, args));
 	    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 	    return reader.readLine();
+	}
+
+	private static int getNumFromConsole(String message, int max)
+	{
+		String choice = "N/A";
+		try {
+			while(!isNumericWithinRange(choice, max)) { choice = readLine(message); }
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return Integer.parseInt(choice);
+	}
+
+	private static boolean isNumericWithinRange(String str, int max)  
+	{  
+		int d = Integer.MAX_VALUE;
+
+	  try  
+	  {  
+	    d = Integer.parseInt(str); 
+	    
+	  }  
+	  catch(NumberFormatException nfe)  
+	  {  
+	    return false;  
+	  } 
+
+	  return d <= max;  
+	}
+
+	public static boolean listContainsPosition(ArrayList<int[]> list, int [] array) {
+		boolean isContained = false;
+		Iterator<int[]> iterator = list.iterator();
+		while(iterator.hasNext() && !isContained) {
+			int []compare = iterator.next();
+			isContained = array[0] == compare[0] && array[1] == compare[1];
+		}
+		return isContained;
 	}
 
 }
