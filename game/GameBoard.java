@@ -141,9 +141,10 @@ public class GameBoard {
 		// Iterate through the stack to print out the path
 		int lengthOfPath = blockStack.size();
 		System.out.println("The length of the actual path was " + lengthOfPath + ".");
+		System.out.println("Here is the series of moves the player made:");
 		while (!blockStack.isEmpty()) {
 			Block block = blockStack.pop();
-			String msg = block.blockType == BlockType.PLAYER || block.blockType == BlockType.GOAL ? block.blockType + "-> " : "";
+			String msg = block.blockType == BlockType.PLAYER || block.blockType == BlockType.GOAL ? block.blockType + "-> " : "Moved to: ";
 			System.out.println(msg + "X: " + block.getX() + " Y: " + block.getY());
 		}
 
