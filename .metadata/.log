@@ -1,62 +1,15 @@
-!SESSION 2015-02-18 20:32:09.453 -----------------------------------------------
-eclipse.buildId=4.4.1.M20140925-0400
-java.version=1.8.0_31
-java.vendor=Oracle Corporation
-BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=en_US
-Framework arguments:  -product org.eclipse.epp.package.jee.product -keyring /Users/juliannadeau/.eclipse_keyring -showlocation
-Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.epp.package.jee.product -keyring /Users/juliannadeau/.eclipse_keyring -showlocation
 
-!ENTRY org.eclipse.m2e.logback.configuration 2 0 2015-02-18 20:33:33.470
-!MESSAGE Exception while setting up logging:org.eclipse.osgi.internal.framework.EquinoxConfiguration$1 cannot be cast to java.lang.String
+!ENTRY org.eclipse.core.resources 4 568 2015-02-25 22:11:37.780
+!MESSAGE Could not write workspace metadata '/Users/juliannadeau/Development/school/CSI4106/Assignment2/.metadata/.plugins/org.eclipse.core.resources/2.snap'.
 !STACK 0
-java.lang.ClassCastException: org.eclipse.osgi.internal.framework.EquinoxConfiguration$1 cannot be cast to java.lang.String
-	at org.eclipse.m2e.logback.configuration.LogHelper.logJavaProperties(LogHelper.java:26)
-	at org.eclipse.m2e.logback.configuration.LogPlugin.loadConfiguration(LogPlugin.java:189)
-	at org.eclipse.m2e.logback.configuration.LogPlugin.configureLogback(LogPlugin.java:144)
-	at org.eclipse.m2e.logback.configuration.LogPlugin.access$2(LogPlugin.java:107)
-	at org.eclipse.m2e.logback.configuration.LogPlugin$1.run(LogPlugin.java:62)
-	at java.util.TimerThread.mainLoop(Timer.java:555)
-	at java.util.TimerThread.run(Timer.java:505)
-
-!ENTRY org.eclipse.core.net 1 0 2015-02-18 20:33:35.864
-!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
-!SESSION 2015-02-18 21:19:43.669 -----------------------------------------------
-eclipse.buildId=4.4.1.M20140925-0400
-java.version=1.8.0_31
-java.vendor=Oracle Corporation
-BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=en_US
-Framework arguments:  -product org.eclipse.epp.package.jee.product -keyring /Users/juliannadeau/.eclipse_keyring -showlocation
-Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.epp.package.jee.product -keyring /Users/juliannadeau/.eclipse_keyring -showlocation
-
-!ENTRY org.eclipse.m2e.logback.configuration 2 0 2015-02-18 21:19:47.132
-!MESSAGE Exception while setting up logging:org.eclipse.osgi.internal.framework.EquinoxConfiguration$1 cannot be cast to java.lang.String
-!STACK 0
-java.lang.ClassCastException: org.eclipse.osgi.internal.framework.EquinoxConfiguration$1 cannot be cast to java.lang.String
-	at org.eclipse.m2e.logback.configuration.LogHelper.logJavaProperties(LogHelper.java:26)
-	at org.eclipse.m2e.logback.configuration.LogPlugin.loadConfiguration(LogPlugin.java:189)
-	at org.eclipse.m2e.logback.configuration.LogPlugin.configureLogback(LogPlugin.java:144)
-	at org.eclipse.m2e.logback.configuration.LogPlugin.access$2(LogPlugin.java:107)
-	at org.eclipse.m2e.logback.configuration.LogPlugin$1.run(LogPlugin.java:62)
-	at java.util.TimerThread.mainLoop(Timer.java:555)
-	at java.util.TimerThread.run(Timer.java:505)
-
-!ENTRY org.eclipse.core.net 1 0 2015-02-18 21:19:49.502
-!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
-
-!ENTRY org.eclipse.ui 4 4 2015-02-19 11:04:58.410
-!MESSAGE Could not retrieve EHandlerService or ICommandService from context evaluation context fororg.eclipse.wst.xml.ui.disable.grammar.constraints
-
-!ENTRY org.eclipse.ui 4 4 2015-02-19 11:04:58.411
-!MESSAGE Could not retrieve EHandlerService or ICommandService from context evaluation context fororg.eclipse.wst.xml.ui.reload.dependencies
-
-!ENTRY org.eclipse.ui 4 4 2015-02-19 11:04:58.411
-!MESSAGE Could not retrieve EHandlerService or ICommandService from context evaluation context fororg.eclipse.wst.xml.ui.disable.grammar.constraints
-
-!ENTRY org.eclipse.ui 4 4 2015-02-19 11:04:58.411
-!MESSAGE Could not retrieve EHandlerService or ICommandService from context evaluation context fororg.eclipse.wst.xml.ui.reload.dependencies
-
-!ENTRY org.eclipse.ui 4 4 2015-02-19 11:04:58.411
-!MESSAGE Could not retrieve EHandlerService or ICommandService from context evaluation context fororg.eclipse.wst.xml.ui.disable.grammar.constraints
-
-!ENTRY org.eclipse.ui 4 4 2015-02-19 11:04:58.411
-!MESSAGE Could not retrieve EHandlerService or ICommandService from context evaluation context fororg.eclipse.wst.xml.ui.reload.dependencies
+java.io.FileNotFoundException: /Users/juliannadeau/Development/school/CSI4106/Assignment2/.metadata/.plugins/org.eclipse.core.resources/2.snap (No such file or directory)
+	at java.io.FileOutputStream.open(Native Method)
+	at java.io.FileOutputStream.<init>(FileOutputStream.java:213)
+	at java.io.FileOutputStream.<init>(FileOutputStream.java:133)
+	at org.eclipse.core.internal.localstore.SafeChunkyOutputStream.<init>(SafeChunkyOutputStream.java:45)
+	at org.eclipse.core.internal.localstore.SafeChunkyOutputStream.<init>(SafeChunkyOutputStream.java:41)
+	at org.eclipse.core.internal.resources.SaveManager.snapTree(SaveManager.java:1484)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1198)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1144)
+	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:51)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)

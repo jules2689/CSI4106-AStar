@@ -1,0 +1,97 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import game.AStarStats;
+import game.Block;
+import game.GameBoard;
+
+public class Runner {
+
+	public static void main(String[] args) {
+		System.out.println("Assignment 2, CSI4106");
+		System.out.println("Julian Nadeau, 6008161");
+		System.out.println("=============================================================");
+		System.out.println("It is recommended to zoom into see the board output more easily.");
+		
+		int gameBoardSizeChoice = getGameBoardSize();
+		GameBoard gameBoard = new GameBoard(gameBoardSizeChoice, getShouldOutputPath());
+		
+		Block.printBlockSymbolMeanings();
+		System.out.println("\n\n");
+		
+		System.out.println("Here is the gameboard:\n");
+		gameBoard.printGameBoard(false);
+		
+		System.out.println("Here are the races for each player:\n");
+		int size = gameBoard.gameBoard.length - 1;
+		ArrayList<AStarStats> stats = new ArrayList<AStarStats>(4);
+		stats.add(gameBoard.aStar(gameBoard.getBlock(0, 0)));
+		stats.add(gameBoard.aStar(gameBoard.getBlock(0, size)));
+		stats.add(gameBoard.aStar(gameBoard.getBlock(size, 0)));
+		stats.add(gameBoard.aStar(gameBoard.getBlock(size, size)));
+		
+		System.out.println("Here are the race results:\n");
+		declareWinner(stats);
+	}
+	
+	public static void declareWinner(List<AStarStats> stats) {
+		Collections.sort(stats);
+		for (AStarStats stat : stats) {
+			int pos = stats.indexOf(stat);
+			if (pos == 0) {
+				System.out.println("The Winner was player at X: " + stat.player.getX() + " Y: " + stat.player.getY());
+			} else {
+				System.out.println("The player in position " + (pos + 1) + " at X: " + stat.player.getX() + " Y: " + stat.player.getY());
+			}
+			System.out.println("Visited " + stat.numVisited + " blocks");
+			System.out.println("Length of Path was " + stat.lengthOfPath);
+			System.out.println("\n");
+		}
+	}
+	
+	private static int getGameBoardSize() {
+		String choice = "N/A";
+		String message = "Which gameboard do you want to use? The (S)mall board, or the (L)arge board with the extra wall? ";
+		
+		try {
+			while(!choice.equalsIgnoreCase("S") && !choice.equalsIgnoreCase("L")) { choice = readLine(message); }
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		if (choice.equalsIgnoreCase("s")) {
+			return 7;
+		} else {
+			return 9;
+		}
+	}
+	
+	private static boolean getShouldOutputPath() {
+		String choice = "N/A";
+		String message = "Do you want to output the path as we traverse? y/n ";
+		
+		try {
+			while(!choice.equalsIgnoreCase("y") && !choice.equalsIgnoreCase("n")) { choice = readLine(message); }
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		if (choice.equalsIgnoreCase("y")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	private static String readLine(String format, Object... args) throws IOException {
+	    if (System.console() != null) { return System.console().readLine(format, args); }
+	    System.out.print(String.format(format, args));
+	    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+	    return reader.readLine();
+	}
+
+}
